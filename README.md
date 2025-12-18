@@ -1,2 +1,2 @@
 # Pas-kwiga
-Pasi kwiga gutwara
+Pasi kwiga 
