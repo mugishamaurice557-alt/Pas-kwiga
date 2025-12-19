@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Imyitozo y'Ikinyarwanda</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+h1 {
+    text-align: center;
+    color: #2c3e50;
+}
+#question {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+.option {
+    background: #ecf0f1;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.option:hover {
+    background: #dcdde1;
+}
+.correct {
+    background: #2ecc71 !important;
+    color: white;
+}
+.wrong {
+    background: #e74c3c !important;
+    color: white;
+}
+#nextBtn {
+    margin-top: 15px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    background: #3498db;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#nextBtn:hover {
+    background: #2980b9;
+}
+#timer, #score {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Imyitozo y'Ikinyarwanda</h1>
+    <div id="timer">Igihe: 15</div>
+    <div id="question"></div>
+    <div id="options"></div>
+    <button id="nextBtn">Ikibazo gikurikira</button>
+    <div id="score"></div>
+</div>
+<script>
+const questions = [
+    {
+        question: "Ijambo 'umunyeshuri' risobanura iki?",
+        options: ["Uwigisha", "Uwiga", "Umuyobozi", "Umubyeyi"],
+        answer: 1
+    },
+    {
+        question: "Ni irihe jambo riri mu cyiciro cy'inshinga?",
+        options: ["Inzu", "Gusoma", "Umwana", "Igitabo"],
+        answer: 1
+    },
+    {
+        question: "Ijambo 'amahoro' risobanura iki?",
+        options: ["Intambara", "Umutekano", "Uburwayi", "Inzara"],
+        answer: 1
+    }
+];
+
+let currentQuestion = 0;
+let score = 0;
+let timeLeft = 15;
+let timer;
+function startTimer() {
+    timeLeft = 15;
+    document.getElementById("timer").innerText = "Igihe: " + timeLeft;
+    timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById("timer").innerText = "Igihe: " + timeLeft;
+        if (timeLeft === 0) {
+            clearInterval(timer);
+            nextQuestion();
+        }
+    }, 1000);
+}
+function loadQuestion() {
+    clearInterval(timer);
+    st
+    const q = questions[currentQuestion];
+    document.getElementById("question").innerText = q.question;
+    const optionsDiv = document.getElementById("options");
+    optionsDiv.innerHTML = "";
+    q.options.forEach((option, index) => {
+        const div = document.createElement("div");
+        div.classList.add("option");
+        div.innerText = option;
+        div.onclick = () => selectAnswer(div, index);
+        optionsDiv.appendChild(div);
+    });
+}
+
+function selectAnswer(element, index) {
+    const q = questions[currentQuestion];
+    const options = document.querySelectorAll(".option");
+
+    options.forEach(opt => opt.onclick = null);
+
+    if (index === q.answer) {
+        element.classList.add("correct");
+        score++;
+    } else {
+        element.classList.add("wrong");
+        options[q.answer].classList.add("correct");
+    }
+}
+
+function nextQuestion() {
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+        loadQuestion();
+    } else {
+        showResult();
+    }
+}
+function showResult() {
+    clearInterval(timer);
+    document.querySelector(".container").innerHTML = `
+        <h1>Byarangiye</h1>
+        <p>Amanota yawe: ${score} / ${questions.length}</p>
+        <button onclick="location.reload()">Ongera utangire</button>
+    `;
+}
+document.getElementById("nextBtn").addEventListener("click", nextQuestion);
+loadQuestion();
+</script>
+</body>
+</html>
