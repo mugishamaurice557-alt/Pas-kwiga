@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+    <meta charset="UTF-8">
+    <title>Program y'Ibanga</title>
+
+    <style>
+        body {
+            background: #eaeaea;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1e7e34;
+        }
+
+        #message {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h3>Injiza Umubare</h3>
+    <input type="number" id="kwinjiza" placeholder="Injiza umubare">
+    <br>
+    <button onclick="genzura()">Ohereza</button>
+    <div id="message"></div>
+</div>
+
+<script>
+    // Ibingana n'ibiri muri C++
+    const ibanga = [100, 200, 300, 400];
+    const gukuba = [2, 3, 0, 5, 6];
+
+    function genzura() {
+        const kwinjiza = Number(document.getElementById("kwinjiza").value);
+        const message = document.getElementById("message");
+
+        // Gusuzuma niba umubare ari mu ibanga
+        if (!ibanga.includes(kwinjiza)) {
+            message.style.color = "red";
+            message.innerHTML = "Umubare si wo, ongera ugerageze.";
+            return;
+        }
+
+        // Guhitamo random nk'uko rand() ikora
+        const randomIndex = Math.floor(Math.random() * gukuba.length);
+        const umubareWoGukuba = gukuba[randomIndex];
+
+        const igisubizo = kwinjiza * umubareWoGukuba;
+
+        message.style.color = "green";
+        message.innerHTML =
+            "Umubare wawe wakubwe na " + umubareWoGukuba +
+            " = " + igisubizo;
+    }
+</script>
+
+</body>
+</html>
